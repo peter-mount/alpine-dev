@@ -3,7 +3,9 @@ MAINTAINER Peter Mount <peter@retep.org>
 
 COPY docker-entrypoint.sh /
 COPY start-ssh /usr/local/bin/
-RUN chmod 555 /usr/local/bin/start-ssh
+RUN chmod 555 /usr/local/bin/start-ssh &&\
+    addgroup jenkins abuild &&\
+    addgroup cloud abuild 
 
 ENTRYPOINT []
 
