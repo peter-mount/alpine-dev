@@ -3,15 +3,18 @@ MAINTAINER Peter Mount <peter@retep.org>
 
 COPY docker-entrypoint.sh /
 COPY start-ssh /usr/local/bin/
-RUN chmod 555 /usr/local/bin/start-ssh &&\
+RUN chmod 555 /usr/local/bin/start-ssh /docker-entrypoint.sh &&\
     addgroup jenkins abuild &&\
     addgroup cloud abuild 
 
+#ENTRYPOINT ["docker-entrypoint.sh"]
 ENTRYPOINT []
 
 # Our required packages. Java is from the parent image
 
-RUN apk add --update \
+RUN wget -O /etc/apk/keys/jenkins-5782b282.rsa.pub http://packages.area51.onl/alpine/jenkins-5782b282.rsa.pub &&\
+    echo http://packages.area51.onl/alpine >>/etc/apk/repositories &&\
+    apk add --update \
         alpine-sdk \
         autoconf \
         automake \
