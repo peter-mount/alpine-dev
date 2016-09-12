@@ -23,6 +23,7 @@ RUN wget -O /etc/apk/keys/jenkins-5782b282.rsa.pub http://packages.area51.onl/al
         git \
         mercurial \
         subversion \
+	valgrind \
         vim
 
 # Don't remove apt lists as we want something present in most builds if we then add additional packages
