@@ -59,3 +59,26 @@ architectures.each {
     }
   }
 }
+
+node( "AMD64" ) {
+  stage( "Publish MultiArch" ) {
+    // The manifest to publish
+    multiImage = dockerImage( '' )
+
+    // Create/amend the manifest with our architectures
+    manifests = architectures.collect { architecture -> dockerImage( architecture ) }
+    sh 'docker manifest create -a ' + multiImage + ' ' + manifests.join(' ')
+
+    // For each architecture annotate them to be correct
+    architectures.each {
+      architecture -> sh 'docker manifest annotate' +
+        ' --os linux' +
+        ' --arch ' + goarch( architecture ) +
+        ' ' + multiImage +
+        ' ' + dockerImage( architecture )
+    }
+
+    // Publish the manifest
+    sh 'docker manifest push -p ' + multiImage
+  }
+}
