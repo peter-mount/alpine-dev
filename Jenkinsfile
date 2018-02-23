@@ -29,7 +29,7 @@ def slaveId = {
 // architecture can be '' for multiarch images
 def dockerImage = {
   service, architecture -> repository + imagePrefix +
-    ( architecture=='' ? '' : ('-' + architecture) ) +
+    ':' + ( architecture=='' ? '' : architecture ) +
     '-' + version
 }
 
