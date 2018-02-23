@@ -12,5 +12,4 @@ RUN apk add --no-cache \
       git \
       mercurial \
       subversion \
-      valgrind \
       vim
