@@ -28,9 +28,9 @@ def slaveId = {
 // The docker image name
 // architecture can be '' for multiarch images
 def dockerImage = {
-  architecture -> repository + imagePrefix +
-    ':' + ( architecture=='' ? '' : architecture ) +
-    '-' + version
+  architecture -> repository + imagePrefix + ':' +
+    ( architecture=='' ? '' : ( architecture + '-' ) ) +
+    version
 }
 
 properties( [
