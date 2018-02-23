@@ -19,7 +19,7 @@ def slaveId = {
     case 'amd64':
       return 'AMD64'
     case 'arm64v8':
-      return ARM64
+      return 'ARM64'
     default:
       return 'amd64'
   }
