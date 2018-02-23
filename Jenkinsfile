@@ -33,6 +33,21 @@ def dockerImage = {
     version
 }
 
+// The go arch
+def goarch = {
+  architecture -> switch( architecture ) {
+    case 'amd64':
+      return 'amd64'
+    case 'arm32v6':
+    case 'arm32v7':
+      return 'arm'
+    case 'arm64v8':
+      return 'arm64'
+    default:
+      return architecture
+  }
+}
+
 properties( [
   buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '7', numToKeepStr: '10')),
   disableConcurrentBuilds(),
