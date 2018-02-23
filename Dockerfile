@@ -12,4 +12,12 @@ RUN apk add --no-cache \
       git \
       mercurial \
       subversion \
-      vim
+      vim \
+      make \
+      gcc \
+      g++ \
+      python \
+      linux-headers \
+      paxctl \
+      libgcc \
+      libstdc++
