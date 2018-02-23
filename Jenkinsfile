@@ -42,12 +42,13 @@ properties( [
   ])
 ])
 
-stage( "Checkout" ) {
-  checkout scm
-}
-
 architectures.each {
   architecture -> node( slaveId( architecture ) ) {
+
+    stage( "Checkout " + architecture ) {
+      checkout scm
+    }
+
     stage( 'Build ' + architecture ) {
       sh 'docker pull alpine'
       sh 'docker build -t ' + dockerImage( architecture ) + ' .'
