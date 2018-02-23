@@ -2,7 +2,7 @@
 repository= 'area51/'
 
 // image prefix
-imagePrefix = 'nre-feeds'
+imagePrefix = 'alpine-dev'
 
 // The image version, master branch is latest in docker
 version=BRANCH_NAME
@@ -13,6 +13,7 @@ if( version == 'master' ) {
 // The architectures to build, in format recognised by docker
 architectures = [ 'amd64', 'arm64v8' ]
 
+// The slave label based on architecture
 def slaveId = {
   architecture -> switch( architecture ) {
     case 'amd64':
@@ -22,6 +23,14 @@ def slaveId = {
     default:
       return 'amd64'
   }
+}
+
+// The docker image name
+// architecture can be '' for multiarch images
+def dockerImage = {
+  service, architecture -> repository + imagePrefix +
+    ( architecture=='' ? '' : ('-' + architecture) ) +
+    '-' + version
 }
 
 properties( [
