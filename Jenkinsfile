@@ -57,26 +57,33 @@ properties( [
   ])
 ])
 
-architectures.each {
+def buildArch = {
   architecture -> node( slaveId( architecture ) ) {
 
-    stage( "Checkout " + architecture ) {
+    stage( architecture ) {
       checkout scm
-    }
 
-    stage( 'Build ' + architecture ) {
       sh 'docker pull alpine'
       sh 'docker build -t ' + dockerImage( architecture ) + ' .'
-    }
 
-    stage( 'Publish ' + architecture ) {
       sh 'docker push ' + dockerImage( architecture )
     }
   }
 }
 
+stage( 'Build' ) {
+  parallel(
+    'amd64': {
+      buildArch( 'amd64' )
+    },
+    'arm64v8': {
+      buildArch( 'arm64v8' )
+    }
+  )
+}
+
 node( "AMD64" ) {
-  stage( "Publish MultiArch" ) {
+  stage( "MultiArch" ) {
     // The manifest to publish
     multiImage = dockerImage( '' )
 
