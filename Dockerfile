@@ -4,6 +4,7 @@ MAINTAINER Peter Mount <peter@retep.org>
 RUN apk add --no-cache \
       ca-certificates \
       curl \
+      wget \
       alpine-sdk \
       autoconf \
       automake \
@@ -16,6 +17,7 @@ RUN apk add --no-cache \
       make \
       gcc \
       g++ \
+      gfortran \
       python \
       linux-headers \
       paxctl \
